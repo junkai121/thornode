@@ -9,6 +9,7 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type HandlerOutboundTxSuite struct{}
@@ -104,7 +105,7 @@ type outboundTxHandlerKeeperHelper struct {
 	vault                 Vault
 }
 
-func newOutboundTxHandlerKeeperHelper(keeper Keeper) *outboundTxHandlerKeeperHelper {
+func newOutboundTxHandlerKeeperHelper(keeper keep.Keeper) *outboundTxHandlerKeeperHelper {
 	return &outboundTxHandlerKeeperHelper{
 		Keeper:                keeper,
 		observeTxVoterErrHash: GetRandomTxHash(),

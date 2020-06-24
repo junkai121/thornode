@@ -8,16 +8,17 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // SwitchHandler is to handle Switch message
 type SwitchHandler struct {
-	keeper              Keeper
+	keeper              keep.Keeper
 	versionedTxOutStore VersionedTxOutStore
 }
 
 // NewSwitchHandler create new instance of SwitchHandler
-func NewSwitchHandler(keeper Keeper, versionedTxOutStore VersionedTxOutStore) SwitchHandler {
+func NewSwitchHandler(keeper keep.Keeper, versionedTxOutStore VersionedTxOutStore) SwitchHandler {
 	return SwitchHandler{
 		keeper:              keeper,
 		versionedTxOutStore: versionedTxOutStore,

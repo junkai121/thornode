@@ -8,16 +8,17 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // BondHandler a handler to process bond
 type BondHandler struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	versionedEventManager VersionedEventManager
 }
 
 // NewBondHandler create new BondHandler
-func NewBondHandler(keeper Keeper, versionedEventManager VersionedEventManager) BondHandler {
+func NewBondHandler(keeper keep.Keeper, versionedEventManager VersionedEventManager) BondHandler {
 	return BondHandler{
 		keeper:                keeper,
 		versionedEventManager: versionedEventManager,

@@ -7,6 +7,7 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type HandlerReserveContributorSuite struct{}
@@ -14,7 +15,7 @@ type HandlerReserveContributorSuite struct{}
 var _ = Suite(&HandlerReserveContributorSuite{})
 
 type reserveContributorKeeper struct {
-	Keeper
+	Keeper                    keep.Keeper
 	errGetReserveContributors bool
 	errSetReserveContributors bool
 	errGetVaultData           bool
@@ -22,7 +23,7 @@ type reserveContributorKeeper struct {
 	errSetEvents              bool
 }
 
-func newReserveContributorKeeper(k Keeper) *reserveContributorKeeper {
+func newReserveContributorKeeper(k keep.Keeper) *reserveContributorKeeper {
 	return &reserveContributorKeeper{
 		Keeper: k,
 	}

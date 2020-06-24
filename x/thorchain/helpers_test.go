@@ -6,6 +6,7 @@ import (
 	. "gopkg.in/check.v1"
 
 	"gitlab.com/thorchain/thornode/common"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 	"gitlab.com/thorchain/thornode/x/thorchain/types"
 )
 
@@ -316,7 +317,7 @@ type addGasFeesKeeperHelper struct {
 	errSetEvent     bool
 }
 
-func newAddGasFeesKeeperHelper(keeper Keeper) *addGasFeesKeeperHelper {
+func newAddGasFeesKeeperHelper(keeper keep.Keeper) *addGasFeesKeeperHelper {
 	return &addGasFeesKeeperHelper{
 		Keeper: keeper,
 	}

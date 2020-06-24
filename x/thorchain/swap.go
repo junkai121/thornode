@@ -7,10 +7,11 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/common"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // validate if pools exist
-func validatePools(ctx sdk.Context, keeper Keeper, assets ...common.Asset) sdk.Error {
+func validatePools(ctx sdk.Context, keeper keep.Keeper, assets ...common.Asset) sdk.Error {
 	for _, asset := range assets {
 		if !asset.IsRune() {
 			if !keeper.PoolExist(ctx, asset) {
@@ -45,7 +46,7 @@ func validateMessage(tx common.Tx, target common.Asset, destination common.Addre
 }
 
 func swap(ctx sdk.Context,
-	keeper Keeper, tx common.Tx,
+	keeper keep.Keeper, tx common.Tx,
 	target common.Asset,
 	destination common.Address,
 	tradeTarget sdk.Uint,
@@ -108,7 +109,7 @@ func swap(ctx sdk.Context,
 }
 
 func swapOne(ctx sdk.Context,
-	keeper Keeper, tx common.Tx,
+	keeper keep.Keeper, tx common.Tx,
 	target common.Asset,
 	destination common.Address,
 	tradeTarget sdk.Uint,

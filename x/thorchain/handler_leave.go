@@ -8,20 +8,21 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // LeaveHandler a handler to process leave request
 // if an operator of THORChain node would like to leave and get their bond back , they have to
 // send a Leave request through Binance Chain
 type LeaveHandler struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	validatorManager      VersionedValidatorManager
 	versionedTxOutStore   VersionedTxOutStore
 	versionedEventManager VersionedEventManager
 }
 
 // NewLeaveHandler create a new LeaveHandler
-func NewLeaveHandler(keeper Keeper, validatorManager VersionedValidatorManager, versionedTxOutStore VersionedTxOutStore, versionedEventManager VersionedEventManager) LeaveHandler {
+func NewLeaveHandler(keeper keep.Keeper, validatorManager VersionedValidatorManager, versionedTxOutStore VersionedTxOutStore, versionedEventManager VersionedEventManager) LeaveHandler {
 	return LeaveHandler{
 		keeper:                keeper,
 		validatorManager:      validatorManager,

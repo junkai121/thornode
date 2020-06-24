@@ -5,10 +5,11 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type VersionedTxOutStore interface {
-	GetTxOutStore(ctx sdk.Context, keeper Keeper, version semver.Version) (TxOutStore, error)
+	GetTxOutStore(ctx sdk.Context, keeper keep.Keeper, version semver.Version) (TxOutStore, error)
 }
 
 type TxOutStore interface {
@@ -33,7 +34,7 @@ func NewVersionedTxOutStore(versionedEventManager VersionedEventManager) *Versio
 }
 
 // GetTxOutStore will return an implementation of the txout store that
-func (s *VersionedTxOutStorage) GetTxOutStore(ctx sdk.Context, keeper Keeper, version semver.Version) (TxOutStore, error) {
+func (s *VersionedTxOutStorage) GetTxOutStore(ctx sdk.Context, keeper keep.Keeper, version semver.Version) (TxOutStore, error) {
 	if version.GTE(semver.MustParse("0.1.0")) {
 		if s.txOutStorage == nil {
 			eventMgr, err := s.versionedEventManager.GetEventManager(ctx, version)

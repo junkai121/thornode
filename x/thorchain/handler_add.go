@@ -7,16 +7,17 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // AddHandler is to handle Add message
 type AddHandler struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	versionedEventManager VersionedEventManager
 }
 
 // NewAddHandler create a new instance of AddHandler
-func NewAddHandler(keeper Keeper, versionedEventManager VersionedEventManager) AddHandler {
+func NewAddHandler(keeper keep.Keeper, versionedEventManager VersionedEventManager) AddHandler {
 	return AddHandler{
 		keeper:                keeper,
 		versionedEventManager: versionedEventManager,

@@ -9,6 +9,7 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type HandlerUnstakeSuite struct{}
@@ -191,7 +192,7 @@ func (HandlerUnstakeSuite) TestUnstakeHandler_mockFailScenarios(c *C) {
 	}
 	testCases := []struct {
 		name           string
-		k              Keeper
+		k              keep.Keeper
 		expectedResult sdk.CodeType
 	}{
 		{

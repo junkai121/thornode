@@ -10,6 +10,7 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type HandlerRefundSuite struct{}
@@ -44,7 +45,7 @@ type refundTxHandlerKeeperTestHelper struct {
 	vault                 Vault
 }
 
-func newRefundTxHandlerKeeperTestHelper(keeper Keeper) *refundTxHandlerKeeperTestHelper {
+func newRefundTxHandlerKeeperTestHelper(keeper keep.Keeper) *refundTxHandlerKeeperTestHelper {
 	return &refundTxHandlerKeeperTestHelper{
 		Keeper:                keeper,
 		observeTxVoterErrHash: GetRandomTxHash(),

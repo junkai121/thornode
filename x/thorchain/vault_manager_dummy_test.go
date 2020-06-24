@@ -5,6 +5,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // VersionedVaultMgrDummy used for test purpose
@@ -19,7 +20,7 @@ func NewVersionedVaultMgrDummy(versionedTxOutStore VersionedTxOutStore) *Version
 	}
 }
 
-func (v *VersionedVaultMgrDummy) GetVaultManager(ctx sdk.Context, keeper Keeper, version semver.Version) (VaultManager, error) {
+func (v *VersionedVaultMgrDummy) GetVaultManager(ctx sdk.Context, keeper keep.Keeper, version semver.Version) (VaultManager, error) {
 	if v.vaultMgrDummy == nil {
 		v.vaultMgrDummy = NewVaultMgrDummy()
 	}

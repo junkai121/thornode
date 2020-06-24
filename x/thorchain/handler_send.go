@@ -7,13 +7,14 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type SendHandler struct {
-	keeper Keeper
+	keeper keep.Keeper
 }
 
-func NewSendHandler(keeper Keeper) SendHandler {
+func NewSendHandler(keeper keep.Keeper) SendHandler {
 	return SendHandler{
 		keeper: keeper,
 	}

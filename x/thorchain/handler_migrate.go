@@ -9,14 +9,15 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type MigrateHandler struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	versionedEventManager VersionedEventManager
 }
 
-func NewMigrateHandler(keeper Keeper, versionedEventManager VersionedEventManager) MigrateHandler {
+func NewMigrateHandler(keeper keep.Keeper, versionedEventManager VersionedEventManager) MigrateHandler {
 	return MigrateHandler{
 		keeper:                keeper,
 		versionedEventManager: versionedEventManager,

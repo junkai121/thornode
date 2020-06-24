@@ -5,11 +5,12 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // VersionedVaultManager
 type VersionedVaultManager interface {
-	GetVaultManager(ctx sdk.Context, keeper Keeper, version semver.Version) (VaultManager, error)
+	GetVaultManager(ctx sdk.Context, keeper keep.Keeper, version semver.Version) (VaultManager, error)
 }
 
 // VaultManager interface define the contract of Vault Manager
@@ -34,7 +35,7 @@ func NewVersionedVaultMgr(versionedTxOutStore VersionedTxOutStore, versionedEven
 }
 
 // GetVaultManager retrieve a VaultManager that is compatible with the given version
-func (v *VersionedVaultMgr) GetVaultManager(ctx sdk.Context, keeper Keeper, version semver.Version) (VaultManager, error) {
+func (v *VersionedVaultMgr) GetVaultManager(ctx sdk.Context, keeper keep.Keeper, version semver.Version) (VaultManager, error) {
 	if version.GTE(semver.MustParse("0.1.0")) {
 		if v.vaultMgrV1 == nil {
 			v.vaultMgrV1 = NewVaultMgr(keeper, v.versionedTxOutStore, v.versionedEventManager)

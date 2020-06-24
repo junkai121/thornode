@@ -13,11 +13,12 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 	q "gitlab.com/thorchain/thornode/x/thorchain/query"
 )
 
 // NewQuerier is the module level router for state queries
-func NewQuerier(keeper Keeper, validatorMgr VersionedValidatorManager) sdk.Querier {
+func NewQuerier(keeper keep.Keeper, validatorMgr VersionedValidatorManager) sdk.Querier {
 	return func(ctx sdk.Context, path []string, req abci.RequestQuery) (res []byte, err sdk.Error) {
 		switch path[0] {
 		case q.QueryPool.Key:
@@ -90,7 +91,7 @@ func getURLFromData(data []byte) (*url.URL, error) {
 	return u, nil
 }
 
-func queryAsgardVaults(ctx sdk.Context, keeper Keeper) ([]byte, sdk.Error) {
+func queryAsgardVaults(ctx sdk.Context, keeper keep.Keeper) ([]byte, sdk.Error) {
 	vaults, err := keeper.GetAsgardVaults(ctx)
 	if err != nil {
 		ctx.Logger().Error("fail to get asgard vaults", "error", err)
@@ -113,7 +114,7 @@ func queryAsgardVaults(ctx sdk.Context, keeper Keeper) ([]byte, sdk.Error) {
 	return res, nil
 }
 
-func queryYggdrasilVaults(ctx sdk.Context, keeper Keeper) ([]byte, sdk.Error) {
+func queryYggdrasilVaults(ctx sdk.Context, keeper keep.Keeper) ([]byte, sdk.Error) {
 	vaults := make(Vaults, 0)
 	iter := keeper.GetVaultIterator(ctx)
 	defer iter.Close()
@@ -167,7 +168,7 @@ func queryYggdrasilVaults(ctx sdk.Context, keeper Keeper) ([]byte, sdk.Error) {
 	return res, nil
 }
 
-func queryVaultsPubkeys(ctx sdk.Context, keeper Keeper) ([]byte, sdk.Error) {
+func queryVaultsPubkeys(ctx sdk.Context, keeper keep.Keeper) ([]byte, sdk.Error) {
 	var resp struct {
 		Asgard    common.PubKeys `json:"asgard"`
 		Yggdrasil common.PubKeys `json:"yggdrasil"`
@@ -198,7 +199,7 @@ func queryVaultsPubkeys(ctx sdk.Context, keeper Keeper) ([]byte, sdk.Error) {
 	return res, nil
 }
 
-func queryVaultData(ctx sdk.Context, keeper Keeper) ([]byte, sdk.Error) {
+func queryVaultData(ctx sdk.Context, keeper keep.Keeper) ([]byte, sdk.Error) {
 	data, err := keeper.GetVaultData(ctx)
 	if err != nil {
 		ctx.Logger().Error("fail to get vault", "error", err)
@@ -217,7 +218,7 @@ func queryVaultData(ctx sdk.Context, keeper Keeper) ([]byte, sdk.Error) {
 	return res, nil
 }
 
-func queryPoolAddresses(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryPoolAddresses(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	active, err := keeper.GetAsgardVaultsByStatus(ctx, ActiveVault)
 	if err != nil {
 		ctx.Logger().Error("fail to get active vaults", "error", err)
@@ -269,7 +270,7 @@ func queryPoolAddresses(ctx sdk.Context, path []string, req abci.RequestQuery, k
 	return res, nil
 }
 
-func queryNodeAccount(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryNodeAccount(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	nodeAddress := path[0]
 	addr, err := sdk.AccAddressFromBech32(nodeAddress)
 	if err != nil {
@@ -297,7 +298,7 @@ func queryNodeAccount(ctx sdk.Context, path []string, req abci.RequestQuery, kee
 	return res, nil
 }
 
-func queryNodeAccounts(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryNodeAccounts(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	nodeAccounts, err := keeper.ListNodeAccountsWithBond(ctx)
 	if err != nil {
 		return nil, sdk.ErrInternal("fail to get node accounts")
@@ -323,7 +324,7 @@ func queryNodeAccounts(ctx sdk.Context, path []string, req abci.RequestQuery, ke
 }
 
 // queryObservers will only return all the active accounts
-func queryObservers(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryObservers(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	activeAccounts, err := keeper.ListActiveNodeAccounts(ctx)
 	if err != nil {
 		return nil, sdk.ErrInternal("fail to get node account iterator")
@@ -341,7 +342,7 @@ func queryObservers(ctx sdk.Context, path []string, req abci.RequestQuery, keepe
 	return res, nil
 }
 
-func queryObserver(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryObserver(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	observerAddr := path[0]
 	addr, err := sdk.AccAddressFromBech32(observerAddr)
 	if err != nil {
@@ -362,7 +363,7 @@ func queryObserver(ctx sdk.Context, path []string, req abci.RequestQuery, keeper
 }
 
 // queryStakers
-func queryStakers(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryStakers(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	asset, err := common.NewAsset(path[0])
 	if err != nil {
 		ctx.Logger().Error("fail to get parse asset", "error", err)
@@ -385,7 +386,7 @@ func queryStakers(ctx sdk.Context, path []string, req abci.RequestQuery, keeper 
 }
 
 // nolint: unparam
-func queryPool(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryPool(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	asset, err := common.NewAsset(path[0])
 	if err != nil {
 		ctx.Logger().Error("fail to parse asset", "error", err)
@@ -425,7 +426,7 @@ func queryPool(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Kee
 	return res, nil
 }
 
-func queryPools(ctx sdk.Context, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryPools(ctx sdk.Context, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	pools := QueryResPools{}
 	iterator := keeper.GetPoolIterator(ctx)
 
@@ -465,7 +466,7 @@ func queryPools(ctx sdk.Context, req abci.RequestQuery, keeper Keeper) ([]byte, 
 	return res, nil
 }
 
-func queryTxIn(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryTxIn(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	hash, err := common.NewTxID(path[0])
 	if err != nil {
 		ctx.Logger().Error("fail to parse tx id", "error", err)
@@ -489,7 +490,7 @@ func queryTxIn(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Kee
 	return res, nil
 }
 
-func queryKeygen(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryKeygen(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	var err error
 	height, err := strconv.ParseInt(path[0], 0, 64)
 	if err != nil {
@@ -531,7 +532,7 @@ func queryKeygen(ctx sdk.Context, path []string, req abci.RequestQuery, keeper K
 	return res, nil
 }
 
-func queryKeysign(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryKeysign(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	var err error
 	height, err := strconv.ParseInt(path[0], 0, 64)
 	if err != nil {
@@ -621,7 +622,7 @@ func getEventStatusFromQuery(u *url.URL) EventStatuses {
 	return GetEventStatuses(values)
 }
 
-func queryEventsByTxHash(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryEventsByTxHash(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	txID, err := common.NewTxID(path[0])
 	if err != nil {
 		ctx.Logger().Error("fail to discover tx hash", "error", err)
@@ -659,7 +660,7 @@ func queryEventsByTxHash(ctx sdk.Context, path []string, req abci.RequestQuery, 
 	return res, nil
 }
 
-func queryCompEvents(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryCompEvents(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	id, err := strconv.ParseInt(path[0], 10, 64)
 	if err != nil {
 		ctx.Logger().Error("fail to discover id number", "error", err)
@@ -742,7 +743,7 @@ func queryCompEvents(ctx sdk.Context, path []string, req abci.RequestQuery, keep
 	return res, nil
 }
 
-func queryHeights(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryHeights(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	chain := common.BNBChain
 	if len(path[0]) > 0 {
 		var err error
@@ -776,7 +777,7 @@ func queryHeights(ctx sdk.Context, path []string, req abci.RequestQuery, keeper 
 }
 
 // queryTSSSigner
-func queryTSSSigners(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryTSSSigners(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	vaultPubKey := path[0]
 	if len(vaultPubKey) == 0 {
 		ctx.Logger().Error("empty vault pub key")
@@ -840,7 +841,7 @@ func queryTSSSigners(ctx sdk.Context, path []string, req abci.RequestQuery, keep
 	return res, nil
 }
 
-func queryConstantValues(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryConstantValues(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	ver := keeper.GetLowestActiveVersion(ctx)
 	constAccessor := constants.GetConstantValues(ver)
 	res, err := codec.MarshalJSONIndent(keeper.Cdc(), constAccessor)
@@ -851,7 +852,7 @@ func queryConstantValues(ctx sdk.Context, path []string, req abci.RequestQuery, 
 	return res, nil
 }
 
-func queryMimirValues(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryMimirValues(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	values := make(map[string]int64, 0)
 	iter := keeper.GetMimirIterator(ctx)
 	defer iter.Close()
@@ -871,7 +872,7 @@ func queryMimirValues(ctx sdk.Context, path []string, req abci.RequestQuery, kee
 	return res, nil
 }
 
-func queryBan(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
+func queryBan(ctx sdk.Context, path []string, req abci.RequestQuery, keeper keep.Keeper) ([]byte, sdk.Error) {
 	addr, err := sdk.AccAddressFromBech32(path[0])
 	if err != nil {
 		ctx.Logger().Error("invalid node address", "error", err)

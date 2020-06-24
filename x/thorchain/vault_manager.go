@@ -9,6 +9,7 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // const values used to emit events
@@ -19,13 +20,13 @@ const (
 
 // VaultMgr is going to manage the vaults
 type VaultMgr struct {
-	k                     Keeper
+	k                     keep.Keeper
 	versionedTxOutStore   VersionedTxOutStore
 	versionedEventManager VersionedEventManager
 }
 
 // NewVaultMgr create a new vault manager
-func NewVaultMgr(k Keeper, versionedTxOutStore VersionedTxOutStore, versionedEventManager VersionedEventManager) *VaultMgr {
+func NewVaultMgr(k keep.Keeper, versionedTxOutStore VersionedTxOutStore, versionedEventManager VersionedEventManager) *VaultMgr {
 	return &VaultMgr{
 		k:                     k,
 		versionedTxOutStore:   versionedTxOutStore,

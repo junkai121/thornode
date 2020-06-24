@@ -8,10 +8,11 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type ObservedTxOutHandler struct {
-	keeper                   Keeper
+	keeper                   keep.Keeper
 	versionedTxOutStore      VersionedTxOutStore
 	validatorMgr             VersionedValidatorManager
 	versionedVaultManager    VersionedVaultManager
@@ -20,7 +21,7 @@ type ObservedTxOutHandler struct {
 	versionedEventManager    VersionedEventManager
 }
 
-func NewObservedTxOutHandler(keeper Keeper,
+func NewObservedTxOutHandler(keeper keep.Keeper,
 	versionedObserverManager VersionedObserverManager,
 	txOutStore VersionedTxOutStore,
 	validatorMgr VersionedValidatorManager,

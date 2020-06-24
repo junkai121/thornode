@@ -7,6 +7,7 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 	tmtypes "github.com/tendermint/tendermint/types"
 	"gitlab.com/thorchain/thornode/common"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // GenesisState strcture that used to store the data THORNode put in genesis
@@ -85,7 +86,7 @@ func DefaultGenesisState() GenesisState {
 }
 
 // InitGenesis read the data in GenesisState and apply it to data store
-func InitGenesis(ctx sdk.Context, keeper Keeper, data GenesisState) []abci.ValidatorUpdate {
+func InitGenesis(ctx sdk.Context, keeper keep.Keeper, data GenesisState) []abci.ValidatorUpdate {
 	for _, record := range data.Pools {
 		if err := keeper.SetPool(ctx, record); err != nil {
 			panic(err)
@@ -183,7 +184,7 @@ func InitGenesis(ctx sdk.Context, keeper Keeper, data GenesisState) []abci.Valid
 }
 
 // ExportGenesis export the data in Genesis
-func ExportGenesis(ctx sdk.Context, k Keeper) GenesisState {
+func ExportGenesis(ctx sdk.Context, k keep.Keeper) GenesisState {
 	var iterator sdk.Iterator
 	currentEventID, _ := k.GetCurrentEventID(ctx)
 

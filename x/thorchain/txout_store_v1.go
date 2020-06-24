@@ -9,18 +9,19 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // TxOutStorageV1 is going to manage all the outgoing tx
 type TxOutStorageV1 struct {
 	height        int64
-	keeper        Keeper
+	keeper        keep.Keeper
 	constAccessor constants.ConstantValues
 	eventMgr      EventManager
 }
 
 // NewTxOutStorage will create a new instance of TxOutStore.
-func NewTxOutStorageV1(keeper Keeper, eventMgr EventManager) *TxOutStorageV1 {
+func NewTxOutStorageV1(keeper keep.Keeper, eventMgr EventManager) *TxOutStorageV1 {
 	return &TxOutStorageV1{
 		keeper:   keeper,
 		eventMgr: eventMgr,

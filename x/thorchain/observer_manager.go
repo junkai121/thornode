@@ -6,11 +6,12 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/common"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type ObserverManager interface {
 	BeginBlock()
-	EndBlock(ctx sdk.Context, keeper Keeper)
+	EndBlock(ctx sdk.Context, keeper keep.Keeper)
 	AppendObserver(chain common.Chain, addrs []sdk.AccAddress)
 	List() []sdk.AccAddress
 }
@@ -79,7 +80,7 @@ func (om *ObserverMgr) List() []sdk.AccAddress {
 }
 
 // EndBlock emit the observers
-func (om *ObserverMgr) EndBlock(ctx sdk.Context, keeper Keeper) {
+func (om *ObserverMgr) EndBlock(ctx sdk.Context, keeper keep.Keeper) {
 	if err := keeper.AddObservingAddresses(ctx, om.List()); err != nil {
 		ctx.Logger().Error("fail to append observers", "error", err)
 	}

@@ -7,17 +7,18 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/common"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // CommonOutboundTxHandler is the place where those common logic can be shared between multiple different kind of outbound tx handler
 // at the moment, handler_refund, and handler_outbound_tx are largely the same , only some small difference
 type CommonOutboundTxHandler struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	versionedEventManager VersionedEventManager
 }
 
 // NewCommonOutboundTxHandler create a new instance of the CommonOutboundTxHandler
-func NewCommonOutboundTxHandler(k Keeper, versionedEventManager VersionedEventManager) CommonOutboundTxHandler {
+func NewCommonOutboundTxHandler(k keep.Keeper, versionedEventManager VersionedEventManager) CommonOutboundTxHandler {
 	return CommonOutboundTxHandler{
 		keeper:                k,
 		versionedEventManager: versionedEventManager,

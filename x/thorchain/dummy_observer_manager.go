@@ -5,6 +5,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/common"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type DummyObserverManager struct {
@@ -15,7 +16,7 @@ func NewDummyObserverManager() *DummyObserverManager {
 }
 
 func (m *DummyObserverManager) BeginBlock()                                               {}
-func (m *DummyObserverManager) EndBlock(ctx sdk.Context, keeper Keeper)                   {}
+func (m *DummyObserverManager) EndBlock(ctx sdk.Context, keeper keep.Keeper)              {}
 func (m *DummyObserverManager) AppendObserver(chain common.Chain, addrs []sdk.AccAddress) {}
 func (m *DummyObserverManager) List() []sdk.AccAddress                                    { return nil }
 

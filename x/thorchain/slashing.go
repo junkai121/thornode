@@ -11,17 +11,18 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // Slasher implements SlashingModule interface provide the necessary functionality to slash node accounts
 type Slasher struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	version               semver.Version
 	versionedEventManager VersionedEventManager
 }
 
 // NewSlasher create a new instance of Slasher
-func NewSlasher(keeper Keeper, version semver.Version, versionedEventManager VersionedEventManager) (*Slasher, error) {
+func NewSlasher(keeper keep.Keeper, version semver.Version, versionedEventManager VersionedEventManager) (*Slasher, error) {
 	if version.GTE(semver.MustParse("0.1.0")) {
 		return &Slasher{
 			keeper:                keeper,

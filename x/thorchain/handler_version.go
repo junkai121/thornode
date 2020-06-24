@@ -7,15 +7,16 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // VersionHandler is to handle Version message
 type VersionHandler struct {
-	keeper Keeper
+	keeper keep.Keeper
 }
 
 // NewVersionHandler create new instance of VersionHandler
-func NewVersionHandler(keeper Keeper) VersionHandler {
+func NewVersionHandler(keeper keep.Keeper) VersionHandler {
 	return VersionHandler{
 		keeper: keeper,
 	}

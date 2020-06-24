@@ -9,11 +9,12 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // SwapQv1 is going to manage the swaps queue
 type SwapQv1 struct {
-	k                     Keeper
+	k                     keep.Keeper
 	versionedTxOutStore   VersionedTxOutStore
 	versionedEventManager VersionedEventManager
 }
@@ -26,7 +27,7 @@ type swapItem struct {
 type swapItems []swapItem
 
 // NewSwapQv1 create a new vault manager
-func NewSwapQv1(k Keeper, versionedTxOutStore VersionedTxOutStore, versionedEventManager VersionedEventManager) *SwapQv1 {
+func NewSwapQv1(k keep.Keeper, versionedTxOutStore VersionedTxOutStore, versionedEventManager VersionedEventManager) *SwapQv1 {
 	return &SwapQv1{
 		k:                     k,
 		versionedTxOutStore:   versionedTxOutStore,

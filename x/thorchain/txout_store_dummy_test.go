@@ -6,6 +6,7 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type VersionedTxOutStoreDummy struct {
@@ -18,7 +19,7 @@ func NewVersionedTxOutStoreDummy() *VersionedTxOutStoreDummy {
 	}
 }
 
-func (v *VersionedTxOutStoreDummy) GetTxOutStore(ctx sdk.Context, keeper Keeper, version semver.Version) (TxOutStore, error) {
+func (v *VersionedTxOutStoreDummy) GetTxOutStore(ctx sdk.Context, keeper keep.Keeper, version semver.Version) (TxOutStore, error) {
 	return v.txoutStore, nil
 }
 

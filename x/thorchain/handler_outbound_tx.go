@@ -6,15 +6,16 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type OutboundTxHandler struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	ch                    CommonOutboundTxHandler
 	versionedEventManager VersionedEventManager
 }
 
-func NewOutboundTxHandler(keeper Keeper, versionedEventManager VersionedEventManager) OutboundTxHandler {
+func NewOutboundTxHandler(keeper keep.Keeper, versionedEventManager VersionedEventManager) OutboundTxHandler {
 	return OutboundTxHandler{
 		keeper: keeper,
 		ch:     NewCommonOutboundTxHandler(keeper, versionedEventManager),

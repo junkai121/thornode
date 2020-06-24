@@ -8,15 +8,16 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type SwapHandler struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	versionedTxOutStore   VersionedTxOutStore
 	versionedEventManager VersionedEventManager
 }
 
-func NewSwapHandler(keeper Keeper, versionedTxOutStore VersionedTxOutStore, versionedEventManager VersionedEventManager) SwapHandler {
+func NewSwapHandler(keeper keep.Keeper, versionedTxOutStore VersionedTxOutStore, versionedEventManager VersionedEventManager) SwapHandler {
 	return SwapHandler{
 		keeper:                keeper,
 		versionedTxOutStore:   versionedTxOutStore,

@@ -5,11 +5,12 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // VersionedSwapQueue
 type VersionedSwapQueue interface {
-	GetSwapQueue(ctx sdk.Context, keeper Keeper, version semver.Version) (SwapQueue, error)
+	GetSwapQueue(ctx sdk.Context, keeper keep.Keeper, version semver.Version) (SwapQueue, error)
 }
 
 // SwapQueue interface define the contract of Swap Queue
@@ -33,7 +34,7 @@ func NewVersionedSwapQ(versionedTxOutStore VersionedTxOutStore, versionedEventMa
 }
 
 // GetSwapQueue retrieve a SwapQueue that is compatible with the given version
-func (v *VersionedSwapQ) GetSwapQueue(ctx sdk.Context, keeper Keeper, version semver.Version) (SwapQueue, error) {
+func (v *VersionedSwapQ) GetSwapQueue(ctx sdk.Context, keeper keep.Keeper, version semver.Version) (SwapQueue, error) {
 	if version.GTE(semver.MustParse("0.1.0")) {
 		if v.queue == nil {
 			v.queue = NewSwapQv1(keeper, v.versionedTxOutStore, v.versionedEventManager)

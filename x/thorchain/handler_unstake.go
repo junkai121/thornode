@@ -8,17 +8,18 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // UnstakeHandler to process unstake requests
 type UnstakeHandler struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	txOutStore            VersionedTxOutStore
 	versionedEventManager VersionedEventManager
 }
 
 // NewUnstakeHandler create a new instance of UnstakeHandler to process unstake request
-func NewUnstakeHandler(keeper Keeper, txOutStore VersionedTxOutStore, versionedEventManager VersionedEventManager) UnstakeHandler {
+func NewUnstakeHandler(keeper keep.Keeper, txOutStore VersionedTxOutStore, versionedEventManager VersionedEventManager) UnstakeHandler {
 	return UnstakeHandler{
 		keeper:                keeper,
 		txOutStore:            txOutStore,

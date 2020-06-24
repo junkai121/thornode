@@ -9,9 +9,10 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
-func validateUnstake(ctx sdk.Context, keeper Keeper, msg MsgSetUnStake) error {
+func validateUnstake(ctx sdk.Context, keeper keep.Keeper, msg MsgSetUnStake) error {
 	if msg.RuneAddress.IsEmpty() {
 		return errors.New("empty rune address")
 	}
@@ -34,7 +35,7 @@ func validateUnstake(ctx sdk.Context, keeper Keeper, msg MsgSetUnStake) error {
 
 // unstake withdraw all the asset
 // it returns runeAmt,assetAmount,units, lastUnstake,err
-func unstake(ctx sdk.Context, version semver.Version, keeper Keeper, msg MsgSetUnStake, eventManager EventManager) (sdk.Uint, sdk.Uint, sdk.Uint, sdk.Uint, sdk.Error) {
+func unstake(ctx sdk.Context, version semver.Version, keeper keep.Keeper, msg MsgSetUnStake, eventManager EventManager) (sdk.Uint, sdk.Uint, sdk.Uint, sdk.Uint, sdk.Error) {
 	if err := validateUnstake(ctx, keeper, msg); err != nil {
 		ctx.Logger().Error("msg unstake fail validation", "error", err)
 		return sdk.ZeroUint(), sdk.ZeroUint(), sdk.ZeroUint(), sdk.ZeroUint(), sdk.NewError(DefaultCodespace, CodeUnstakeFailValidation, err.Error())

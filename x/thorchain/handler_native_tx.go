@@ -10,10 +10,11 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type NativeTxHandler struct {
-	keeper                   Keeper
+	keeper                   keep.Keeper
 	versionedTxOutStore      VersionedTxOutStore
 	validatorMgr             VersionedValidatorManager
 	versionedVaultManager    VersionedVaultManager
@@ -22,7 +23,7 @@ type NativeTxHandler struct {
 	versionedEventManager    VersionedEventManager
 }
 
-func NewNativeTxHandler(keeper Keeper,
+func NewNativeTxHandler(keeper keep.Keeper,
 	versionedObserverManager VersionedObserverManager,
 	versionedTxOutStore VersionedTxOutStore,
 	validatorMgr VersionedValidatorManager,

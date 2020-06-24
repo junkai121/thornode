@@ -8,16 +8,17 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // ErrataTxHandler is to handle ErrataTx message
 type ErrataTxHandler struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	versionedEventManager VersionedEventManager
 }
 
 // NewErrataTxHandler create new instance of ErrataTxHandler
-func NewErrataTxHandler(keeper Keeper, versionedEventManager VersionedEventManager) ErrataTxHandler {
+func NewErrataTxHandler(keeper keep.Keeper, versionedEventManager VersionedEventManager) ErrataTxHandler {
 	return ErrataTxHandler{
 		keeper:                keeper,
 		versionedEventManager: versionedEventManager,

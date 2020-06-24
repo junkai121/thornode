@@ -9,6 +9,7 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 	"gitlab.com/thorchain/thornode/x/thorchain/types"
 )
 
@@ -318,7 +319,7 @@ func (UnstakeSuite) TestUnstake(c *C) {
 	testCases := []struct {
 		name          string
 		msg           MsgSetUnStake
-		ps            Keeper
+		ps            keep.Keeper
 		runeAmount    sdk.Uint
 		assetAmount   sdk.Uint
 		expectedError error
@@ -486,7 +487,7 @@ func (UnstakeSuite) TestUnstake(c *C) {
 	}
 }
 
-func getUnstakeTestKeeper(c *C) Keeper {
+func getUnstakeTestKeeper(c *C) keep.Keeper {
 	runeAddress, err := common.NewAddress("bnb1g0xakzh03tpa54khxyvheeu92hwzypkdce77rm")
 	if err != nil {
 		c.Error("fail to create new BNB Address")

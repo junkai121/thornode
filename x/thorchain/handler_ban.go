@@ -8,15 +8,16 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // BanHandler is to handle Ban message
 type BanHandler struct {
-	keeper Keeper
+	keeper keep.Keeper
 }
 
 // NewBanHandler create new instance of BanHandler
-func NewBanHandler(keeper Keeper) BanHandler {
+func NewBanHandler(keeper keep.Keeper) BanHandler {
 	return BanHandler{
 		keeper: keeper,
 	}

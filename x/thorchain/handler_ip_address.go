@@ -7,15 +7,16 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // IPAddressHandler is to handle ip address message
 type IPAddressHandler struct {
-	keeper Keeper
+	keeper keep.Keeper
 }
 
 // NewIPAddressHandler create new instance of IPAddressHandler
-func NewIPAddressHandler(keeper Keeper) IPAddressHandler {
+func NewIPAddressHandler(keeper keep.Keeper) IPAddressHandler {
 	return IPAddressHandler{
 		keeper: keeper,
 	}

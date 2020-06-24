@@ -8,6 +8,7 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // THORChain error code start at 101
@@ -58,7 +59,7 @@ var (
 )
 
 // NewExternalHandler returns a handler for "thorchain" type messages.
-func NewExternalHandler(keeper Keeper,
+func NewExternalHandler(keeper keep.Keeper,
 	versionedTxOutStore VersionedTxOutStore,
 	validatorMgr VersionedValidatorManager,
 	versionedVaultManager VersionedVaultManager,
@@ -87,7 +88,7 @@ func NewExternalHandler(keeper Keeper,
 	}
 }
 
-func getHandlerMapping(keeper Keeper,
+func getHandlerMapping(keeper keep.Keeper,
 	versionedTxOutStore VersionedTxOutStore,
 	validatorMgr VersionedValidatorManager,
 	versionedVaultManager VersionedVaultManager,
@@ -111,7 +112,7 @@ func getHandlerMapping(keeper Keeper,
 }
 
 // NewInternalHandler returns a handler for "thorchain" internal type messages.
-func NewInternalHandler(keeper Keeper,
+func NewInternalHandler(keeper keep.Keeper,
 	versionedTxOutStore VersionedTxOutStore,
 	validatorMgr VersionedValidatorManager,
 	versionedVaultManager VersionedVaultManager,
@@ -135,7 +136,7 @@ func NewInternalHandler(keeper Keeper,
 	}
 }
 
-func getInternalHandlerMapping(keeper Keeper,
+func getInternalHandlerMapping(keeper keep.Keeper,
 	versionedTxOutStore VersionedTxOutStore,
 	validatorMgr VersionedValidatorManager,
 	versionedVaultManager VersionedVaultManager,
@@ -160,7 +161,7 @@ func getInternalHandlerMapping(keeper Keeper,
 	return m
 }
 
-func fetchMemo(ctx sdk.Context, constAccessor constants.ConstantValues, keeper Keeper, tx common.Tx) string {
+func fetchMemo(ctx sdk.Context, constAccessor constants.ConstantValues, keeper keep.Keeper, tx common.Tx) string {
 	if len(tx.Memo) > 0 {
 		return tx.Memo
 	}
@@ -189,7 +190,7 @@ func fetchMemo(ctx sdk.Context, constAccessor constants.ConstantValues, keeper K
 	return memo
 }
 
-func processOneTxIn(ctx sdk.Context, keeper Keeper, tx ObservedTx, signer sdk.AccAddress) (sdk.Msg, sdk.Error) {
+func processOneTxIn(ctx sdk.Context, keeper keep.Keeper, tx ObservedTx, signer sdk.AccAddress) (sdk.Msg, sdk.Error) {
 	if len(tx.Tx.Coins) == 0 {
 		return nil, sdk.ErrUnknownRequest("no coin found")
 	}

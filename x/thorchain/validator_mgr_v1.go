@@ -13,19 +13,20 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // validatorMgrV1 is to manage a list of validators , and rotate them
 type validatorMgrV1 struct {
 	version               semver.Version
-	k                     Keeper
+	k                     keep.Keeper
 	versionedVaultManager VersionedVaultManager
 	versionedTxOutStore   VersionedTxOutStore
 	versionedEventManager VersionedEventManager
 }
 
 // newValidatorMgrV1 create a new instance of ValidatorManager
-func newValidatorMgrV1(k Keeper, versionedTxOutStore VersionedTxOutStore, versionedVaultManager VersionedVaultManager, versionedEventManager VersionedEventManager) *validatorMgrV1 {
+func newValidatorMgrV1(k keep.Keeper, versionedTxOutStore VersionedTxOutStore, versionedVaultManager VersionedVaultManager, versionedEventManager VersionedEventManager) *validatorMgrV1 {
 	return &validatorMgrV1{
 		version:               semver.MustParse("0.1.0"),
 		k:                     k,

@@ -6,16 +6,17 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // TssKeysignHandler is design to process MsgTssKeysignFail
 type TssKeysignHandler struct {
-	keeper Keeper
+	keeper keep.Keeper
 }
 
 // NewTssKeysignHandler create a new instance of TssKeysignHandler
 // when a signer fail to join tss keysign , thorchain need to slash their node account
-func NewTssKeysignHandler(keeper Keeper) TssKeysignHandler {
+func NewTssKeysignHandler(keeper keep.Keeper) TssKeysignHandler {
 	return TssKeysignHandler{
 		keeper: keeper,
 	}

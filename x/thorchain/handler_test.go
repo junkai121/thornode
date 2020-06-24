@@ -18,6 +18,7 @@ import (
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
 
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 	"gitlab.com/thorchain/thornode/x/thorchain/types"
 )
 
@@ -49,7 +50,7 @@ var (
 	keyThorchain = sdk.NewKVStoreKey(StoreKey)
 )
 
-func setupKeeperForTest(c *C) (sdk.Context, Keeper) {
+func setupKeeperForTest(c *C) (sdk.Context, keep.Keeper) {
 	keyAcc := sdk.NewKVStoreKey(auth.StoreKey)
 	keyParams := sdk.NewKVStoreKey(params.StoreKey)
 	tkeyParams := sdk.NewTransientStoreKey(params.TStoreKey)
@@ -100,7 +101,7 @@ func setupKeeperForTest(c *C) (sdk.Context, Keeper) {
 
 type handlerTestWrapper struct {
 	ctx                  sdk.Context
-	keeper               Keeper
+	keeper               keep.Keeper
 	validatorMgr         VersionedValidatorManager
 	versionedTxOutStore  VersionedTxOutStore
 	activeNodeAccount    NodeAccount

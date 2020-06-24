@@ -8,6 +8,7 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 const (
@@ -23,7 +24,7 @@ type VersionedValidatorManager interface {
 
 // VersionedValidatorMgr
 type VersionedValidatorMgr struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	v1ValidatorMgr        *validatorMgrV1
 	versionedTxOutStore   VersionedTxOutStore
 	versionedVaultManager VersionedVaultManager
@@ -31,7 +32,7 @@ type VersionedValidatorMgr struct {
 }
 
 // NewVersionedValidatorMgr create a new versioned validator mgr , which require to pass in a version
-func NewVersionedValidatorMgr(k Keeper, versionedTxOutStore VersionedTxOutStore, versionedVaultManager VersionedVaultManager, versionedEventManager VersionedEventManager) *VersionedValidatorMgr {
+func NewVersionedValidatorMgr(k keep.Keeper, versionedTxOutStore VersionedTxOutStore, versionedVaultManager VersionedVaultManager, versionedEventManager VersionedEventManager) *VersionedValidatorMgr {
 	return &VersionedValidatorMgr{
 		keeper:                k,
 		versionedTxOutStore:   versionedTxOutStore,

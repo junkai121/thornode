@@ -19,6 +19,7 @@ import (
 
 	"gitlab.com/thorchain/thornode/x/thorchain/client/cli"
 	"gitlab.com/thorchain/thornode/x/thorchain/client/rest"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // type check to ensure the interface is properly implemented
@@ -72,7 +73,7 @@ func (AppModuleBasic) GetTxCmd(cdc *codec.Codec) *cobra.Command {
 
 type AppModule struct {
 	AppModuleBasic
-	keeper                   Keeper
+	keeper                   keep.Keeper
 	coinKeeper               bank.Keeper
 	supplyKeeper             supply.Keeper
 	txOutStore               VersionedTxOutStore
@@ -84,7 +85,7 @@ type AppModule struct {
 }
 
 // NewAppModule creates a new AppModule Object
-func NewAppModule(k Keeper, bankKeeper bank.Keeper, supplyKeeper supply.Keeper) AppModule {
+func NewAppModule(k keep.Keeper, bankKeeper bank.Keeper, supplyKeeper supply.Keeper) AppModule {
 	versionedEventManager := NewVersionedEventMgr()
 	versionedTxOutStore := NewVersionedTxOutStore(versionedEventManager)
 	versionedVaultMgr := NewVersionedVaultMgr(versionedTxOutStore, versionedEventManager)

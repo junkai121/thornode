@@ -8,10 +8,11 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // Fund is a method to fund yggdrasil pool
-func Fund(ctx sdk.Context, keeper Keeper, txOutStore TxOutStore, constAccessor constants.ConstantValues) error {
+func Fund(ctx sdk.Context, keeper keep.Keeper, txOutStore TxOutStore, constAccessor constants.ConstantValues) error {
 	// Check if we have triggered the ragnarok protocol
 	ragnarokHeight, err := keeper.GetRagnarokBlockHeight(ctx)
 	if err != nil {
@@ -154,7 +155,7 @@ func Fund(ctx sdk.Context, keeper Keeper, txOutStore TxOutStore, constAccessor c
 
 // sendCoinsToYggdrasil - adds outbound txs to send the given coins to a
 // yggdrasil pool
-func sendCoinsToYggdrasil(ctx sdk.Context, keeper Keeper, coins common.Coins, ygg Vault, txOutStore TxOutStore) (int, error) {
+func sendCoinsToYggdrasil(ctx sdk.Context, keeper keep.Keeper, coins common.Coins, ygg Vault, txOutStore TxOutStore) (int, error) {
 	var count int
 
 	active, err := keeper.GetAsgardVaultsByStatus(ctx, ActiveVault)

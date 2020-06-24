@@ -8,14 +8,15 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type RagnarokHandler struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	versionedEventManager VersionedEventManager
 }
 
-func NewRagnarokHandler(keeper Keeper, versionedEventManager VersionedEventManager) RagnarokHandler {
+func NewRagnarokHandler(keeper keep.Keeper, versionedEventManager VersionedEventManager) RagnarokHandler {
 	return RagnarokHandler{
 		keeper:                keeper,
 		versionedEventManager: versionedEventManager,

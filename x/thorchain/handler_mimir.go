@@ -8,17 +8,18 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 var ADMIN = sdk.AccAddress("thor1x0akdepu6vs40cv30xqz3qnd85mh7gkf5a0z89")
 
 // MimirHandler is to handle admin messages
 type MimirHandler struct {
-	keeper Keeper
+	keeper keep.Keeper
 }
 
 // NewMimirHandler create new instance of MimirHandler
-func NewMimirHandler(keeper Keeper) MimirHandler {
+func NewMimirHandler(keeper keep.Keeper) MimirHandler {
 	return MimirHandler{
 		keeper: keeper,
 	}

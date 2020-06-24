@@ -7,16 +7,17 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // StakeHandler is to handle stake
 type StakeHandler struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	versionedEventManager VersionedEventManager
 }
 
 // NewStakeHandler create a new instance of StakeHandler
-func NewStakeHandler(keeper Keeper, versionedEventManager VersionedEventManager) StakeHandler {
+func NewStakeHandler(keeper keep.Keeper, versionedEventManager VersionedEventManager) StakeHandler {
 	return StakeHandler{
 		keeper:                keeper,
 		versionedEventManager: versionedEventManager,

@@ -9,6 +9,7 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // YggdrasilHandler is to process yggdrasil messages
@@ -19,14 +20,14 @@ import (
 // 1. outbound tx from yggdrasil vault
 // 2. inbound tx to asgard vault
 type YggdrasilHandler struct {
-	keeper                Keeper
+	keeper                keep.Keeper
 	txOutStore            VersionedTxOutStore
 	validatorMgr          VersionedValidatorManager
 	versionedEventManager VersionedEventManager
 }
 
 // NewYggdrasilHandler create a new Yggdrasil handler
-func NewYggdrasilHandler(keeper Keeper, txOutStore VersionedTxOutStore, validatorMgr VersionedValidatorManager, versionedEventManager VersionedEventManager) YggdrasilHandler {
+func NewYggdrasilHandler(keeper keep.Keeper, txOutStore VersionedTxOutStore, validatorMgr VersionedValidatorManager, versionedEventManager VersionedEventManager) YggdrasilHandler {
 	return YggdrasilHandler{
 		keeper:                keeper,
 		txOutStore:            txOutStore,

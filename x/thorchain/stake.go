@@ -8,10 +8,11 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 // validateStakeMessage is to do some validation, and make sure it is legit
-func validateStakeMessage(ctx sdk.Context, keeper Keeper, asset common.Asset, requestTxHash common.TxID, runeAddr, assetAddr common.Address) error {
+func validateStakeMessage(ctx sdk.Context, keeper keep.Keeper, asset common.Asset, requestTxHash common.TxID, runeAddr, assetAddr common.Address) error {
 	if asset.IsEmpty() {
 		return errors.New("asset is empty")
 	}
@@ -33,7 +34,7 @@ func validateStakeMessage(ctx sdk.Context, keeper Keeper, asset common.Asset, re
 	return nil
 }
 
-func stake(ctx sdk.Context, keeper Keeper,
+func stake(ctx sdk.Context, keeper keep.Keeper,
 	asset common.Asset,
 	stakeRuneAmount, stakeAssetAmount sdk.Uint,
 	runeAddr, assetAddr common.Address,

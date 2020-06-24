@@ -6,6 +6,7 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 
 	. "gopkg.in/check.v1"
 )
@@ -76,7 +77,7 @@ type yggdrasilHandlerTestHelper struct {
 	validatorMgr  VersionedValidatorManager
 }
 
-func newYggdrasilTestKeeper(keeper Keeper) *yggdrasilTestKeeper {
+func newYggdrasilTestKeeper(keeper keep.Keeper) *yggdrasilTestKeeper {
 	return &yggdrasilTestKeeper{
 		Keeper: keeper,
 	}

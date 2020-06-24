@@ -10,6 +10,7 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type HandlerTssSuite struct{}
@@ -89,7 +90,7 @@ func (k *tssKeeperHelper) SetNodeAccount(ctx sdk.Context, na NodeAccount) error 
 	return k.Keeper.SetNodeAccount(ctx, na)
 }
 
-func newTssKeeperHelper(keeper Keeper) *tssKeeperHelper {
+func newTssKeeperHelper(keeper keep.Keeper) *tssKeeperHelper {
 	return &tssKeeperHelper{
 		Keeper: keeper,
 	}

@@ -7,13 +7,14 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
 type SetNodeKeysHandler struct {
-	keeper Keeper
+	keeper keep.Keeper
 }
 
-func NewSetNodeKeysHandler(keeper Keeper) SetNodeKeysHandler {
+func NewSetNodeKeysHandler(keeper keep.Keeper) SetNodeKeysHandler {
 	return SetNodeKeysHandler{
 		keeper: keeper,
 	}

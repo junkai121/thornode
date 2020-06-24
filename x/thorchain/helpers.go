@@ -9,9 +9,10 @@ import (
 
 	"gitlab.com/thorchain/thornode/common"
 	"gitlab.com/thorchain/thornode/constants"
+	"gitlab.com/thorchain/thornode/x/thorchain/keep"
 )
 
-func refundTx(ctx sdk.Context, tx ObservedTx, store TxOutStore, keeper Keeper, constAccessor constants.ConstantValues, refundCode sdk.CodeType, refundReason string, eventMgr EventManager) error {
+func refundTx(ctx sdk.Context, tx ObservedTx, store TxOutStore, keeper keep.Keeper, constAccessor constants.ConstantValues, refundCode sdk.CodeType, refundReason string, eventMgr EventManager) error {
 	// If THORNode recognize one of the coins, and therefore able to refund
 	// withholding fees, refund all coins.
 	var refundCoins common.Coins
@@ -85,7 +86,7 @@ func getFee(input, output common.Coins, transactionFee int64) common.Fee {
 	return fee
 }
 
-func subsidizePoolWithSlashBond(ctx sdk.Context, keeper Keeper, ygg Vault, yggTotalStolen, slashRuneAmt sdk.Uint) error {
+func subsidizePoolWithSlashBond(ctx sdk.Context, keeper keep.Keeper, ygg Vault, yggTotalStolen, slashRuneAmt sdk.Uint) error {
 	// Thorchain did not slash the node account
 	if slashRuneAmt.IsZero() {
 		return nil
@@ -145,7 +146,7 @@ func subsidizePoolWithSlashBond(ctx sdk.Context, keeper Keeper, ygg Vault, yggTo
 
 // getTotalYggValueInRune will go through all the coins in ygg , and calculate the total value in RUNE
 // return value will be totalValueInRune,error
-func getTotalYggValueInRune(ctx sdk.Context, keeper Keeper, ygg Vault) (sdk.Uint, error) {
+func getTotalYggValueInRune(ctx sdk.Context, keeper keep.Keeper, ygg Vault) (sdk.Uint, error) {
 	yggRune := sdk.ZeroUint()
 	for _, coin := range ygg.Coins {
 		if coin.Asset.IsRune() {
@@ -161,7 +162,7 @@ func getTotalYggValueInRune(ctx sdk.Context, keeper Keeper, ygg Vault) (sdk.Uint
 	return yggRune, nil
 }
 
-func refundBond(ctx sdk.Context, tx common.Tx, nodeAcc NodeAccount, keeper Keeper, txOut TxOutStore, eventMgr EventManager) error {
+func refundBond(ctx sdk.Context, tx common.Tx, nodeAcc NodeAccount, keeper keep.Keeper, txOut TxOutStore, eventMgr EventManager) error {
 	if nodeAcc.Status == NodeActive {
 		ctx.Logger().Info("node still active , cannot refund bond", "node address", nodeAcc.NodeAddress, "node pub key", nodeAcc.PubKeySet.Secp256k1)
 		return nil
@@ -252,11 +253,11 @@ func refundBond(ctx sdk.Context, tx common.Tx, nodeAcc NodeAccount, keeper Keepe
 }
 
 // Checks if the observed vault pubkey is a valid asgard or ygg vault
-func isCurrentVaultPubKey(ctx sdk.Context, keeper Keeper, tx ObservedTx) bool {
+func isCurrentVaultPubKey(ctx sdk.Context, keeper keep.Keeper, tx ObservedTx) bool {
 	return keeper.VaultExists(ctx, tx.ObservedPubKey)
 }
 
-func isSignedByActiveNodeAccounts(ctx sdk.Context, keeper Keeper, signers []sdk.AccAddress) bool {
+func isSignedByActiveNodeAccounts(ctx sdk.Context, keeper keep.Keeper, signers []sdk.AccAddress) bool {
 	if len(signers) == 0 {
 		return false
 	}
@@ -282,7 +283,7 @@ func isSignedByActiveNodeAccounts(ctx sdk.Context, keeper Keeper, signers []sdk.
 	return true
 }
 
-func updateEventStatus(ctx sdk.Context, keeper Keeper, eventID int64, txs common.Txs, eventStatus EventStatus) error {
+func updateEventStatus(ctx sdk.Context, keeper keep.Keeper, eventID int64, txs common.Txs, eventStatus EventStatus) error {
 	event, err := keeper.GetEvent(ctx, eventID)
 	if err != nil {
 		return fmt.Errorf("fail to get event: %w", err)
@@ -322,7 +323,7 @@ func updateEventStatus(ctx sdk.Context, keeper Keeper, eventID int64, txs common
 	return keeper.UpsertEvent(ctx, event)
 }
 
-func updateEventFee(ctx sdk.Context, keeper Keeper, txID common.TxID, fee common.Fee) error {
+func updateEventFee(ctx sdk.Context, keeper keep.Keeper, txID common.TxID, fee common.Fee) error {
 	ctx.Logger().Info("update event fee txid", "tx", txID.String())
 	eventIDs, err := keeper.GetEventsIDByTxHash(ctx, txID)
 	if err != nil {
@@ -348,7 +349,7 @@ func updateEventFee(ctx sdk.Context, keeper Keeper, txID common.TxID, fee common
 	return keeper.UpsertEvent(ctx, event)
 }
 
-func completeEvents(ctx sdk.Context, keeper Keeper, txID common.TxID, txs common.Txs, eventStatus EventStatus) error {
+func completeEvents(ctx sdk.Context, keeper keep.Keeper, txID common.TxID, txs common.Txs, eventStatus EventStatus) error {
 	ctx.Logger().Info(fmt.Sprintf("txid(%s)", txID))
 	eventIDs, err := keeper.GetPendingEventID(ctx, txID)
 	if err != nil {
@@ -366,7 +367,7 @@ func completeEvents(ctx sdk.Context, keeper Keeper, txID common.TxID, txs common
 	return nil
 }
 
-func enableNextPool(ctx sdk.Context, keeper Keeper, eventManager EventManager) error {
+func enableNextPool(ctx sdk.Context, keeper keep.Keeper, eventManager EventManager) error {
 	var pools []Pool
 	iterator := keeper.GetPoolIterator(ctx)
 	defer iterator.Close()
@@ -408,7 +409,7 @@ func wrapError(ctx sdk.Context, err error, wrap string) error {
 	return err
 }
 
-func AddGasFees(ctx sdk.Context, keeper Keeper, tx ObservedTx, gasManager GasManager) error {
+func AddGasFees(ctx sdk.Context, keeper keep.Keeper, tx ObservedTx, gasManager GasManager) error {
 	if len(tx.Tx.Gas) == 0 {
 		return nil
 	}
